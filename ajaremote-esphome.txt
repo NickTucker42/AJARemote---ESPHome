@@ -1,0 +1,164 @@
+esphome:
+  name: ajaremote1
+  friendly_name: AJARemote1
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "redacted"
+
+ota:
+  - platform: esphome
+    password: "redacted"
+
+wifi:
+  networks:
+  - ssid: "redacted"
+    password: !secret 1wifi_password
+  - ssid: "redacted-2"
+    password: !secret 2wifi_password 
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Ajaremote1 Fallback Hotspot"
+    password: "redacted"
+
+captive_portal:
+
+#==================================================================
+# Defined for use with the AJARemote hardware.  
+#==================================================================
+remote_receiver:
+  pin: 
+    number: GPIO15
+    inverted: true
+  dump: raw
+  
+remote_transmitter:
+  pin: 
+   number: GPIO4
+  carrier_duty_percent: 50%    
+#==================================================================
+
+button:
+
+# Onkyo
+  - platform: template
+    name: Onkyo Power
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8534, -4466, 585, -499, 603, -1626, 605, -499, 602, -499, 600, -1626, 603, -500, 601, -1624, 605, -1650, 581, -498, 600, -500, 599, -1627, 601, -1626, 603, -499, 600, -1625, 604, -1648, 580, -500, 599, -1649, 578, -1649, 580, -499, 599]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-1649, 578, -500, 598, -500, 597, -1648, 578, -1649, 579, -499, 599, -499, 596, -1649, 578, -499, 597, -1648, 579, -1648, 579, -500, 597, -499, 597]
+        carrier_frequency: 38kHz        
+#      
+  - platform: template
+    name: Onkyo_Bluray
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8513, -4487, 586, -499, 604, -1626, 633, -470, 602, -500, 600, -1626, 603, -500, 601, -1649, 580, -1627, 604, -499, 600, -499, 599, -1627, 602, -1627, 603, -499, 600, -1625, 603, -1625, 605, -499, 600, -499, 599, -498, 598, -1649, 579]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-1624, 604, -499, 599, -499, 597, -500, 597, -1648, 578, -1650, 579, -1625, 603, -499, 599, -498, 596, -1650, 578, -1627, 600, -1627, 601, -499, 598]
+        carrier_frequency: 38kHz  
+#
+  - platform: template
+    name: Onkyo_Game
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8448, -4489, 583, -500, 601, -1625, 604, -500, 597, -500, 597, -1625, 603, -499, 598, -1649, 579, -1649, 578, -1650, 578, -499, 598, -1648, 579, -1626, 602, -499, 598, -1648, 578, -1647, 580, -499, 597, -1650, 577, -499, 596, -1650, 576]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-1649, 578, -500, 595, -501, 594, -500, 593, -501, 593, -499, 593, -1649, 576, -500, 594, -499, 594, -1649, 575, -1649, 577, -1649, 576, -1649, 601]
+        carrier_frequency: 38kHz 
+#
+  - platform: template
+    name: Onkyo_PC
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8496, -4489, 587, -499, 604, -1626, 606, -499, 602, -500, 600, -1626, 604, -499, 603, -1626, 604, -1648, 582, -1627, 604, -499, 601, -1648, 582, -1626, 604, -499, 601, -1625, 604, -1626, 604, -499, 601, -498, 600, -498, 598, -1648, 580]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-1649, 580, -1626, 603, -500, 599, -500, 597, -1626, 601, -1627, 604, -1649, 579, -500, 599, -500, 596, -499, 597, -1627, 628, -1599, 601, -500, 598]
+        carrier_frequency: 38kHz 
+#
+  - platform: template
+    name: Onkyo_CD
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8439, -4506, 527, -582, 546, -1680, 523, -580, 545, -555, 544, -1702, 498, -582, 518, -1730, 525, -1702, 524, -1683, 547, -556, 547, -1678, 549, -1678, 549, -554, 546, -1701, 526, -1679, 548, -554, 548, -1675, 550, -552, 544, -552, 547]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-1696, 526, -552, 573, -522, 542, -552, 541, -552, 543, -549, 543, -1698, 528, -1675, 548, -552, 545, -1676, 549, -1677, 550, -1677, 550, -1676, 550]
+        carrier_frequency: 38kHz 
+#
+  - platform: template
+    name: Onkyo_Volup
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8469, -4506, 528, -581, 522, -1730, 500, -583, 548, -551, 517, -1731, 522, -558, 547, -1703, 498, -1730, 525, -1683, 549, -554, 545, -1704, 499, -1729, 500, -580, 547, -1701, 499, -1730, 526, -552, 543, -557, 544, -1701, 523, -556, 542]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-555, 541, -553, 542, -553, 540, -554, 540, -553, 542, -1677, 545, -554, 547, -1696, 527, -1701, 528, -1699, 527, -1700, 523, -1683, 547, -1681, 547]
+        carrier_frequency: 38kHz 
+#
+  - platform: template
+    name: Onkyo_Voldown
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8386, -4509, 521, -583, 516, -1731, 496, -583, 513, -583, 513, -1730, 494, -584, 512, -1732, 493, -1733, 493, -1734, 495, -583, 514, -1731, 493, -1732, 495, -582, 514, -1730, 494, -1732, 494, -584, 511, -1731, 494, -1731, 494, -583, 512]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-583, 510, -583, 508, -581, 509, -581, 509, -581, 508, -583, 507, -581, 507, -1708, 513, -1731, 493, -1730, 494, -1731, 494, -1730, 494, -1731, 494]
+        carrier_frequency: 38kHz
+ #
+  - platform: template
+    name: Onkyo_Mute
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [8357, -4507, 557, -546, 552, -1695, 533, -545, 549, -546, 547, -1695, 529, -547, 547, -1694, 530, -1696, 532, -1692, 557, -521, 547, -1696, 530, -1695, 530, -547, 545, -1695, 529, -1673, 553, -545, 547, -1673, 550, -546, 548, -1671, 551]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [-546, 546, -546, 545, -545, 543, -547, 566, -521, 569, -519, 568, -1669, 553, -519, 546, -1693, 528, -1694, 555, -1668, 554, -1670, 556, -1667, 552]
+        carrier_frequency: 38kHz
+#
+# Onkyo
+
+#BluRay (Sony)
+  - platform: template
+    name: BlueRay_Power
+    on_press:
+     - remote_transmitter.transmit_raw:
+        code: [2342, -640, 1149, -640, 553, -641, 1149, -640, 554, -639, 1151, -638, 555, -638, 553, -641, 552, -641, 1150, -640, 552, -641, 1150, -640, 1149, -641, 552, -640, 1152, -637, 553, -641, 553, -640, 553, -640, 1151, -640, 1149, -639, 1150]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [2341, -640, 1150, -638, 554, -640, 1150, -640, 554, -639, 1151, -639, 553, -640, 553, -640, 553, -639, 1151, -640, 553, -639, 1151, -639, 1151, -639, 553, -639, 1152, -639, 554, -639, 553, -639, 554, -641, 1150, -638, 1151, -638, 1153]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [2345, -637, 1152, -638, 554, -640, 1150, -639, 554, -639, 1152, -638, 554, -639, 554, -639, 555, -638, 1152, -638, 555, -638, 1151, -638, 1153, -636, 557, -637, 1152, -638, 556, -637, 555, -637, 557, -637, 1153, -637, 1153, -594, 1219]
+        carrier_frequency: 38kHz
+
+     - remote_transmitter.transmit_raw:
+        code: [2371, -611, 1179, -611, 581, -613, 1178, -611, 581, -613, 1179, -609, 583, -610, 582, -612, 583, -610, 1180, -610, 583, -609, 1180, -610, 1181, -609, 583, -610, 1179, -610, 584, -610, 581, -612, 581, -612, 1178, -611, 1178, -612, 1176]
+        carrier_frequency: 38kHz
+
+#BluRay
