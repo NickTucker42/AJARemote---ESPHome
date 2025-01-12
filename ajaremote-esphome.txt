@@ -50,6 +50,58 @@ remote_transmitter:
 
 button:
 
+esphome:
+  name: ajaremote1
+  friendly_name: AJARemote1
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "017Pw4dpre+KSkYDsNi31P515eyKBBTVM8ihvYNCZAw="
+
+ota:
+  - platform: esphome
+    password: "4f874849d8eae7f916b112d02291f325"
+
+wifi:
+  networks:
+  - ssid: "CHouse"
+    password: !secret 1wifi_password
+  - ssid: "Wireless5-2"
+    password: !secret 2wifi_password 
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Ajaremote1 Fallback Hotspot"
+    password: "hg44bE8Ac8IK"
+
+captive_portal:
+
+#==================================================================
+# Defined for use with the AJARemote hardware.  
+#==================================================================
+remote_receiver:
+  pin: 
+    number: GPIO15
+    inverted: true
+  dump: raw
+  
+remote_transmitter:
+  pin: 
+   number: GPIO4
+  carrier_duty_percent: 50%    
+#==================================================================
+
+button:
+
 # Onkyo
   - platform: template
     name: Onkyo Power
@@ -145,20 +197,233 @@ button:
   - platform: template
     name: BlueRay_Power
     on_press:
-     - remote_transmitter.transmit_raw:
-        code: [2342, -640, 1149, -640, 553, -641, 1149, -640, 554, -639, 1151, -638, 555, -638, 553, -641, 552, -641, 1150, -640, 552, -641, 1150, -640, 1149, -641, 552, -640, 1152, -637, 553, -641, 553, -640, 553, -640, 1151, -640, 1149, -639, 1150]
-        carrier_frequency: 38kHz
-
-     - remote_transmitter.transmit_raw:
-        code: [2341, -640, 1150, -638, 554, -640, 1150, -640, 554, -639, 1151, -639, 553, -640, 553, -640, 553, -639, 1151, -640, 553, -639, 1151, -639, 1151, -639, 553, -639, 1152, -639, 554, -639, 553, -639, 554, -641, 1150, -638, 1151, -638, 1153]
-        carrier_frequency: 38kHz
-
-     - remote_transmitter.transmit_raw:
-        code: [2345, -637, 1152, -638, 554, -640, 1150, -639, 554, -639, 1152, -638, 554, -639, 554, -639, 555, -638, 1152, -638, 555, -638, 1151, -638, 1153, -636, 557, -637, 1152, -638, 556, -637, 555, -637, 557, -637, 1153, -637, 1153, -594, 1219]
-        carrier_frequency: 38kHz
-
-     - remote_transmitter.transmit_raw:
-        code: [2371, -611, 1179, -611, 581, -613, 1178, -611, 581, -613, 1179, -609, 583, -610, 582, -612, 583, -610, 1180, -610, 583, -609, 1180, -610, 1181, -609, 583, -610, 1179, -610, 584, -610, 581, -612, 581, -612, 1178, -611, 1178, -612, 1176]
-        carrier_frequency: 38kHz
-
+     - remote_transmitter.transmit_sony:
+        data: 0x000A8B47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+#
+  - platform: template
+    name: BlueRay_Next
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x0006AB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+#
+  - platform: template
+    name: BlueRay_Prev
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x000EAB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms         
+#
+  - platform: template
+    name: BlueRay_Play
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x00058B47
+        nbits: 20
+        repeat:
+         times: 2       
+         wait_time: 250ms          
+  #
+  - platform: template
+    name: BlueRay_Pause
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x00098B47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms           
+#
+  - platform: template
+    name: BlueRay_Stop
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x00018B47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms 
+#
+  - platform: template
+    name: BlueRay_FForward
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x00038B47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms                   
+#
+  - platform: template
+    name: BlueRay_FRewind
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x000D8B47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms          
+#
+  - platform: template
+    name: BlueRay_Tray
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x00068B47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms          
+#
+  - platform: template
+    name: BlueRay_OK
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x000BCB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+#
+  - platform: template
+    name: BlueRay_Up
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x0009CB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+# 
+  - platform: template
+    name: BlueRay_Down
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x0005CB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+#    
+  - platform: template
+    name: BlueRay_Left
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x000DCB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+#   
+  - platform: template
+    name: BlueRay_Right
+    on_press:
+     - remote_transmitter.transmit_sony:
+        data: 0x0003CB47
+        nbits: 20
+        repeat:
+         times: 2
+         wait_time: 250ms
+#                       
 #BluRay
+
+#Projector
+#
+  - platform: template
+    name: Projector_Power
+    on_press:
+     - remote_transmitter.transmit_pronto:
+        data: "0000 006D 0022 0000 015E 00AB 0017 0041 0015 0041 0015 0017 0015 0015 0017 0015 0015 0015 0017 0015 0017 003F 0017 0041 0015 0017 0015 0041 0017 0015 0015 0041 0015 0017 0017 003F 0015 0017 0015 0015 0017 0015 0015 0017 0015 0015 0017 0041 0015 0015 0017 0015 0017 003F 0017 0041 0015 0041 0015 0041 0017 003F 0017 0015 0017 003F 0017 0041 0015 0017 0015 258F"
+#      
+  - platform: template
+    name: Projector_Off
+    on_press:
+     - remote_transmitter.transmit_pronto:
+        data: "0000 006D 0022 0000 015C 00AD 0015 0041 0015 0043 0015 0015 0015 0017 0015 0017 0015 0015 0017 0015 0015 0043 0015 0041 0015 0017 0015 0041 0015 0015 0017 0041 0015 0015 0015 0043 0015 0017 0013 0043 0015 0015 0015 0017 0017 0015 0015 0041 0015 0017 0015 0017 0015 0041 0015 0017 0015 0041 0015 0041 0015 0043 0013 0017 0015 0041 0015 0043 0015 0015 0017 258F"
+#
+#Projector
+
+#CD Player
+  - platform: template
+    name: CD_Power
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xFB04
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_Stop
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xE31C
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_Pause
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xE01F
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_Play
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xE41B
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_Next
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xE21D
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_Prev
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xE11E
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_FForward
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xFF00
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_FRewind
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xFE01
+       command_repeats: 1      
+#
+  - platform: template
+    name: CD_Tray
+    on_press:
+    - remote_transmitter.transmit_nec:
+       address: 0x2CD2
+       command: 0xF40B
+       command_repeats: 1      
+#
+
+#CD Player
