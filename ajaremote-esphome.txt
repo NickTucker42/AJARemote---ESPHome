@@ -13,58 +13,6 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "redacted"
-
-ota:
-  - platform: esphome
-    password: "redacted"
-
-wifi:
-  networks:
-  - ssid: "redacted"
-    password: !secret 1wifi_password
-  - ssid: "redacted-2"
-    password: !secret 2wifi_password 
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Ajaremote1 Fallback Hotspot"
-    password: "redacted"
-
-captive_portal:
-
-#==================================================================
-# Defined for use with the AJARemote hardware.  
-#==================================================================
-remote_receiver:
-  pin: 
-    number: GPIO15
-    inverted: true
-  dump: raw
-  
-remote_transmitter:
-  pin: 
-   number: GPIO4
-  carrier_duty_percent: 50%    
-#==================================================================
-
-button:
-
-esphome:
-  name: ajaremote1
-  friendly_name: AJARemote1
-
-esp32:
-  board: esp32dev
-  framework:
-    type: arduino
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
     key: "017Pw4dpre+KSkYDsNi31P515eyKBBTVM8ihvYNCZAw="
 
 ota:
